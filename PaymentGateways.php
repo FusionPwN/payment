@@ -41,7 +41,7 @@ final class PaymentGateways
         self::$registry[$id] = $class;
     }
 
-    public static function make(string $id): PaymentGateway
+    public static function make(string $id, array $params = []): PaymentGateway
     {
         $gwClass = self::getClass($id);
 
@@ -51,7 +51,7 @@ final class PaymentGateways
             );
         }
 
-        return app()->make($gwClass);
+        return app()->make($gwClass, $params);
     }
 
     public static function reset(): void

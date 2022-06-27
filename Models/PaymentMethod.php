@@ -70,7 +70,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
             return new NullGateway();
         }
 
-        return PaymentGateways::make($this->gateway);
+        return PaymentGateways::make($this->gateway, ['paymentMethod' => $this]);
     }
 
     public function getConfiguration(): array

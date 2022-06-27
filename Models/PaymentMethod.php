@@ -78,6 +78,11 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return $this->configuration ?? [];
     }
 
+	public function getConfigurationValue(string $key = null): array
+	{
+		return $this->configuration[$key] ?? [];
+	}
+
     public function isEnabled(): bool
     {
         return (bool) $this->is_enabled;

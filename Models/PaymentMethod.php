@@ -78,7 +78,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return $this->configuration ?? [];
     }
 
-	public function getConfigurationValue(string $key = null): array
+	public function getConfigurationValue(string $key = null)
 	{
 		return Arr::get($this->configuration, $key);
 	}

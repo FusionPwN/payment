@@ -60,7 +60,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
 
 	public function image()
 	{
-		return $this->hasMany(Media::class, 'image_default');
+		return $this->hasMany(Media::class, 'id', 'image_default');
 	}
 
 	public function imageSrc()

@@ -145,4 +145,10 @@ class PaymentMethod extends Model implements PaymentMethodContract
 
         return $gwClass::getName();
     }
+
+	public function incrementTransactionNr()
+	{
+		$this->transaction_count += 1;
+		$this->save();
+	}
 }

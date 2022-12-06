@@ -82,6 +82,8 @@ class PaymentMethod extends Model implements PaymentMethodContract
 			return mix('images/' . $service . '.png');
 		} else if (File::exists('images/' . $service . '.svg')) {
 			return mix('images/' . $service . '.svg');
+        } else if($service == "cartao_cliente") {
+            return mix('images/' . 'icon-farmacool' . '.png');
 		} else {
 			return '';
 		}
@@ -125,9 +127,22 @@ class PaymentMethod extends Model implements PaymentMethodContract
         return (string) $this->name;
     }
 
+    public function isCardPayment(): bool
+    {
+        if(isset($this->configuration['SERVICE']) && $this->configuration['SERVICE'] == "cartao_cliente"){
+            return true;
+        }
+
+        return false;
+    }
+
     public function scopeActives(Builder $query)
     {
-        return $query->where('is_enabled', true);
+        return $query->where('is_enabled', true)->where('configuration', 'not like', "%cartao_cliente%");
+    }
+
+    public function scopeCard(Builder $query){
+        return $query->where('is_enabled', true)->where('configuration', 'like', "%cartao_cliente%");
     }
 
     public function scopeInActives(Builder $query)

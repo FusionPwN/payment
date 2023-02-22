@@ -74,7 +74,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
 	public function imageSrc()
 	{
 		$image = $this->image;
-		$service = strtolower($this->getConfigurationValue('SERVICE'));
+		$service = $this->getConfigurationValue('SERVICE') !== null ? strtolower($this->getConfigurationValue('SERVICE')) : null;
 
 		if (isset($service)) {
 			if (isset($image[0]->file)) {

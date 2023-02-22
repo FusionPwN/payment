@@ -15,12 +15,14 @@ declare(strict_types=1);
 namespace Vanilo\Payment\Models;
 
 use App\Models\Admin\Media;
+use App\Models\Admin\PaymentMethodsLocations;
 use App\Models\Themes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Konekt\Enum\Eloquent\CastsEnums;
 use Vanilo\Payment\Contracts\PaymentGateway;
 use Vanilo\Payment\Contracts\PaymentMethod as PaymentMethodContract;
 use Vanilo\Payment\Gateways\NullGateway;
@@ -41,11 +43,17 @@ use Vanilo\Payment\PaymentGateways;
  */
 class PaymentMethod extends Model implements PaymentMethodContract
 {
+	use CastsEnums;
+	
     protected $guarded = ['id', 'transaction_count', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $casts = [
         'configuration' => 'json'
     ];
+
+	protected $enums = [
+		'location' => PaymentMethodsLocations::class,
+	];
 
     public static function boot()
     {

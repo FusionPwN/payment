@@ -68,25 +68,29 @@ class PaymentMethod extends Model implements PaymentMethodContract
 		$image = $this->image;
 		$service = strtolower($this->getConfigurationValue('SERVICE'));
 
-		if (isset($image[0]->file)) {
-			return asset('storage/uploads/uploads_360_360/' . $image[0]->file);
-		} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.jpg')) {
-			return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.jpg');
-		} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.png')) {
-			return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.png');
-		} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.svg')) {
-			return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.svg');
-		} else if (File::exists('images/' . $service . '.jpg')) {
-			return mix('images/' . $service . '.jpg');
-		} else if (File::exists('images/' . $service . '.png')) {
-			return mix('images/' . $service . '.png');
-		} else if (File::exists('images/' . $service . '.svg')) {
-			return mix('images/' . $service . '.svg');
-        } else if($service == "cartao_cliente") {
-            return mix('images/' . 'icon-farmacool' . '.png');
-		} else {
-			return '';
+		if (isset($service)) {
+			if (isset($image[0]->file)) {
+				return asset('storage/uploads/uploads_360_360/' . $image[0]->file);
+			} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.jpg')) {
+				return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.jpg');
+			} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.png')) {
+				return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.png');
+			} else if (File::exists('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.svg')) {
+				return asset('themes/' . Themes::getActiveTheme() . '/images/' . $service . '.svg');
+			} else if (File::exists('images/' . $service . '.jpg')) {
+				return mix('images/' . $service . '.jpg');
+			} else if (File::exists('images/' . $service . '.png')) {
+				return mix('images/' . $service . '.png');
+			} else if (File::exists('images/' . $service . '.svg')) {
+				return mix('images/' . $service . '.svg');
+			} else if ($service == "cartao_cliente") {
+				return mix('images/' . 'icon-farmacool' . '.png');
+			}else {
+                return '';
+            }
 		}
+
+		return '';
 	}
 
     public function getTimeout(): int

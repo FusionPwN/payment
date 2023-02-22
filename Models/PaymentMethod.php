@@ -93,9 +93,7 @@ class PaymentMethod extends Model implements PaymentMethodContract
 				return mix('images/' . $service . '.svg');
 			} else if ($service == "cartao_cliente") {
 				return mix('images/' . 'icon-farmacool' . '.png');
-			}else {
-                return '';
-            }
+			}
 		}
 
 		return '';

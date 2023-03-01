@@ -176,4 +176,14 @@ class PaymentMethod extends Model implements PaymentMethodContract
 		$this->transaction_count += 1;
 		$this->save();
 	}
+
+	public function scopePrescription(Builder $query)
+	{
+		return $query->whereIn('location', PaymentMethodsLocations::prescriptionLocations());
+	}
+
+	public function scopeCheckout(Builder $query)
+	{
+		return $query->whereIn('location', PaymentMethodsLocations::checkoutLocations());
+	}
 }

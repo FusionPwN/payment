@@ -12,7 +12,7 @@ declare(strict_types=1);
  *
  */
 
-namespace App\Factories\Payment;
+namespace Vanilo\Payment\Factories;
 
 use Vanilo\Contracts\Payable;
 use Vanilo\Payment\Contracts\Payment;

@@ -186,4 +186,36 @@ class PaymentMethod extends Model implements PaymentMethodContract
 	{
 		return $query->whereIn('location', PaymentMethodsLocations::checkoutLocations());
 	}
+    
+    public function getNameAttribute()
+    {
+        // Obtém o idioma atual
+        $locale = app()->getLocale();
+
+        // Verifica se é o idioma padrão
+        if ($locale === config('app.fallback_locale')) {
+            return $this->attributes['name'] ?? null;
+        }
+
+        // Caso contrário, busca o campo correspondente ao idioma
+        $nameField = 'name_' . $locale;
+        
+        return $this->attributes[$nameField] ?? $this->attributes['name']; // Fallback para o padrão se não houver nome no idioma
+    }
+
+    public function getDescriptionAttribute()
+    {
+        // Obtém o idioma atual
+        $locale = app()->getLocale();
+
+        // Verifica se é o idioma padrão
+        if ($locale === config('app.fallback_locale')) {
+            return $this->attributes['description'] ?? null;
+        }
+
+        // Caso contrário, busca o campo correspondente ao idioma
+        $descriptionField = 'description_' . $locale;
+        
+        return $this->attributes[$descriptionField] ?? $this->attributes['description']; // Fallback para o padrão se não houver nome no idioma
+    }
 }

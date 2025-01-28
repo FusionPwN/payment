@@ -28,8 +28,21 @@ class PaymentFactory
 		PaymentMethod $paymentMethod,
 		array $extraData = []
 	): Payment {
+		$amount = $paymentMethod->isCardPayment() ? $payable->card_used_balance : $payable->getAmount();
+
+		if($payable->haveDuplicatePayments == 1)
+		{
+			foreach($payable->payments as $createdPayment)
+			{
+				if($createdPayment->status == PaymentStatusProxy::PAID())
+				{
+					$amount = $amount - $createdPayment->amount;
+				}
+			}
+		}
+
 		$payment = PaymentProxy::create([
-			'amount' => $paymentMethod->isCardPayment() ? $payable->card_used_balance : $payable->getAmount(),
+			'amount' => $amount,
 			'currency' => $payable->getCurrency(),
 			'payable_type' => $payable->getPayableType(),
 			'payable_id' => $payable->getPayableId(),
